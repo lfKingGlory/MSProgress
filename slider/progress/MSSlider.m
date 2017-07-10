@@ -33,8 +33,9 @@
         self.slider = [[UISlider alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 20, self.frame.size.width, 20)];
         self.slider.minimumTrackTintColor = [UIColor colorWithRed:246/255.0 green:37/255.0 blue:0/255.0 alpha:1];
         self.slider.maximumTrackTintColor = [UIColor ms_colorWithHexString:@"#f8f8f8"];
-        UIImage *thumbImage = [UIImage ms_createImageWithColor:[UIColor colorWithRed:246/255.0 green:37/255.0 blue:0/255.0 alpha:1] withSize:CGSizeMake(20, 20)];
-        [self.slider setThumbImage:thumbImage forState:UIControlStateNormal];
+//        UIImage *thumbImage = [UIImage ms_createImageWithColor:[UIColor colorWithRed:246/255.0 green:37/255.0 blue:0/255.0 alpha:1] withSize:CGSizeMake(20, 20)];
+//        [self.slider setThumbImage:thumbImage forState:UIControlStateNormal];
+        [self.slider setThumbImage:[UIImage imageNamed:@"circle"] forState:UIControlStateNormal];
         [self.slider addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
         [self addSubview:self.slider];
         
