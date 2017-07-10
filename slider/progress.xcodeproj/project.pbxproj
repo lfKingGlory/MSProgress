@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A21679C1F137BC4003A67F3 /* UIView+FrameUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A21679B1F137BC4003A67F3 /* UIView+FrameUtil.m */; };
 		6A7892661F09D42C00FA1AE7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A7892651F09D42C00FA1AE7 /* main.m */; };
 		6A7892691F09D42C00FA1AE7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A7892681F09D42C00FA1AE7 /* AppDelegate.m */; };
 		6A78926C1F09D42C00FA1AE7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A78926B1F09D42C00FA1AE7 /* ViewController.m */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A21679A1F137BC4003A67F3 /* UIView+FrameUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FrameUtil.h"; sourceTree = "<group>"; };
+		6A21679B1F137BC4003A67F3 /* UIView+FrameUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FrameUtil.m"; sourceTree = "<group>"; };
 		6A7892611F09D42C00FA1AE7 /* progress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = progress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A7892651F09D42C00FA1AE7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6A7892671F09D42C00FA1AE7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -112,6 +115,8 @@
 			children = (
 				6A7892671F09D42C00FA1AE7 /* AppDelegate.h */,
 				6A7892681F09D42C00FA1AE7 /* AppDelegate.m */,
+				6A21679A1F137BC4003A67F3 /* UIView+FrameUtil.h */,
+				6A21679B1F137BC4003A67F3 /* UIView+FrameUtil.m */,
 				6A78929D1F09DA5B00FA1AE7 /* MSSlider.h */,
 				6A78929E1F09DA5B00FA1AE7 /* MSSlider.m */,
 				6A78926A1F09D42C00FA1AE7 /* ViewController.h */,
@@ -296,6 +301,7 @@
 				6A7892691F09D42C00FA1AE7 /* AppDelegate.m in Sources */,
 				6A7892991F09D8AB00FA1AE7 /* UIColor+StringColor.m in Sources */,
 				6A7892661F09D42C00FA1AE7 /* main.m in Sources */,
+				6A21679C1F137BC4003A67F3 /* UIView+FrameUtil.m in Sources */,
 				6A7892A21F09DD8900FA1AE7 /* UIImage+color.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

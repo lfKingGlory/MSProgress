@@ -9,12 +9,16 @@
 #import "MSSlider.h"
 #import "UIImage+color.h"
 #import "UIColor+StringColor.h"
+#import "UIView+FrameUtil.h"
 
 @interface MSSlider ()
 @property (assign, nonatomic, readwrite) float currentValue;
 @property (strong, nonatomic) UILabel *lbProgress;
 @property (strong, nonatomic) UISlider *slider;
 @property (assign, nonatomic) int interval;
+
+@property (strong, nonatomic) UILabel *lbMin;
+@property (strong, nonatomic) UILabel *lbMax;
 @end
 
 @implementation MSSlider
@@ -23,23 +27,38 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.lbProgress = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 20)];
-        self.lbProgress.text = @"0";
+        
+        self.lbProgress = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.width, 20)];
+        self.lbProgress.centerX = 10;
         self.lbProgress.textColor = [UIColor colorWithRed:246/255.0 green:37/255.0 blue:0/255.0 alpha:1];
         self.lbProgress.textAlignment = NSTextAlignmentCenter;
         self.lbProgress.font = [UIFont boldSystemFontOfSize:20];
         [self addSubview:self.lbProgress];
         
-        self.slider = [[UISlider alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 20, self.frame.size.width, 20)];
+        self.slider = [[UISlider alloc] initWithFrame:CGRectMake(0, self.height - 20, self.width, 20)];
         self.slider.minimumTrackTintColor = [UIColor colorWithRed:246/255.0 green:37/255.0 blue:0/255.0 alpha:1];
         self.slider.maximumTrackTintColor = [UIColor ms_colorWithHexString:@"#f8f8f8"];
-//        UIImage *thumbImage = [UIImage ms_createImageWithColor:[UIColor colorWithRed:246/255.0 green:37/255.0 blue:0/255.0 alpha:1] withSize:CGSizeMake(20, 20)];
-//        [self.slider setThumbImage:thumbImage forState:UIControlStateNormal];
         [self.slider setThumbImage:[UIImage imageNamed:@"circle"] forState:UIControlStateNormal];
         [self.slider addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
         [self addSubview:self.slider];
         
         self.currentValue = 0;
+        
+        self.lbMin = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.slider.frame) + 8, 200, 15)];
+        self.lbMin.centerX = 0;
+        self.lbMin.textColor = [UIColor blackColor];
+        self.lbMin.alpha = 0.3;
+        self.lbMin.textAlignment = NSTextAlignmentCenter;
+        self.lbMin.font = [UIFont systemFontOfSize:13];
+        [self addSubview:self.lbMin];
+        
+        self.lbMax = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.slider.frame) + 8, 200, 15)];
+        self.lbMax.centerX = self.width;
+        self.lbMax.textColor = [UIColor blackColor];
+        self.lbMax.alpha = 0.3;
+        self.lbMax.textAlignment = NSTextAlignmentCenter;
+        self.lbMax.font = [UIFont systemFontOfSize:13];
+        [self addSubview:self.lbMax];
     }
     return self;
 }
@@ -47,11 +66,18 @@
 - (void)setMinValue:(float)minValue {
     _minValue = minValue;
     self.slider.minimumValue = minValue;
+    self.lbMin.text = [self convertMoneyFormate:minValue];
+    
+    self.lbProgress.text = [self convertMoneyFormate:minValue];
+    CGSize size = [self.lbProgress.text sizeWithAttributes:@{NSFontAttributeName : self.lbProgress.font}];
+    self.lbProgress.width = size.width;
+    self.lbProgress.centerX = 10;
 }
 
 - (void)setMaxValue:(float)maxValue {
     _maxValue = maxValue;
     self.slider.maximumValue = maxValue;
+    self.lbMax.text = [self convertMoneyFormate:maxValue];
 }
 
 - (void)setIntervalStyle:(MSSliderIntervalStyle)intervalStyle {
@@ -85,21 +111,41 @@
         default:
             break;
     }
-    self.lbProgress.text = [NSString stringWithFormat:@"%d",self.interval];
 }
 
 - (void)valueChanged:(UISlider *)slider {
     
     int value = floorf(slider.value);
     int realValue = (value / self.interval) * self.interval;
-    if (realValue == 0) {
+    if (realValue == 0 && value == 0) {
+        realValue = self.minValue;
+    } else if (realValue == 0 && value <= self.interval) {
         realValue = self.interval;
     }
-    self.lbProgress.text = [NSString stringWithFormat:@"%d",realValue];
+    NSLog(@"%d",value);
+    self.lbProgress.text = [self convertMoneyFormate:realValue];
+    CGSize size = [self.lbProgress.text sizeWithAttributes:@{NSFontAttributeName : self.lbProgress.font}];
+    self.lbProgress.width = size.width;
+    
+    CGFloat progress = (slider.value - self.minValue) / (self.maxValue - self.minValue);
+    
+    if (progress == 0) {
+        self.lbProgress.centerX = 10;
+    } else if (progress == 1) {
+        self.lbProgress.centerX = self.width * progress - 10;
+    } else {
+        self.lbProgress.centerX = self.width * progress;
+    }
+    
     self.currentValue = realValue;
     if (self.valueChangeBlock) {
         self.valueChangeBlock(self.currentValue);
     }
 }
 
+- (NSString *)convertMoneyFormate:(double)amount {
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setPositiveFormat:@"###,##0"];
+    return [numberFormatter stringFromNumber:[NSNumber numberWithDouble:amount]];
+}
 @end
