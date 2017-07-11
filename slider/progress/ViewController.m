@@ -22,7 +22,7 @@
     
     MSSlider *slider = [[MSSlider alloc] initWithFrame:CGRectMake(30, 100, self.view.frame.size.width - 60, 68)];
     slider.minValue = 1000;
-    slider.maxValue = 100000;
+    slider.maxValue = 500000;
     slider.intervalStyle = MSSliderIntervalStyle_Thousand;
     [self.view addSubview:slider];
     self.slider = slider;
@@ -34,7 +34,7 @@
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.slider.minValue = 1000;
-        self.slider.maxValue = 100000;
+        self.slider.maxValue = 500000;
         self.slider.intervalStyle = MSSliderIntervalStyle_Thousand;
     });
     
@@ -44,6 +44,12 @@
         slider.maxValue = 10000;
         slider.intervalStyle = MSSliderIntervalStyle_Thousand;
         [self.view addSubview:slider];
+        
+        slider.valueChangeBlock = ^(float currentValue) {
+            
+            NSLog(@"%.2f",currentValue);
+            
+        };
     }
     
     {
@@ -52,14 +58,26 @@
         slider.maxValue = 10000;
         slider.intervalStyle = MSSliderIntervalStyle_Hundred;
         [self.view addSubview:slider];
+        
+        slider.valueChangeBlock = ^(float currentValue) {
+            
+            NSLog(@"%.2f",currentValue);
+            
+        };
     }
     
     {
         MSSlider *slider = [[MSSlider alloc] initWithFrame:CGRectMake(30, 400, self.view.frame.size.width - 60, 68)];
         slider.minValue = 1000;
-        slider.maxValue = 100000;
+        slider.maxValue = 500000;
         slider.intervalStyle = MSSliderIntervalStyle_TenThousand;
         [self.view addSubview:slider];
+        
+        slider.valueChangeBlock = ^(float currentValue) {
+            
+            NSLog(@"%.2f",currentValue);
+            
+        };
     }
     
     {
@@ -68,6 +86,12 @@
         slider.maxValue = 1000;
         slider.intervalStyle = MSSliderIntervalStyle_Ten;
         [self.view addSubview:slider];
+        
+        slider.valueChangeBlock = ^(float currentValue) {
+            
+            NSLog(@"%.2f",currentValue);
+            
+        };
     }
     
     

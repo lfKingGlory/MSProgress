@@ -133,7 +133,6 @@
         }
     }
     
-    NSLog(@"%d",value);
     self.lbProgress.text = [self convertMoneyFormate:realValue];
     CGSize size = [self.lbProgress.text sizeWithAttributes:@{NSFontAttributeName : self.lbProgress.font}];
     self.lbProgress.width = size.width;
