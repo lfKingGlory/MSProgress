@@ -35,7 +35,7 @@
         self.lbProgress.font = [UIFont boldSystemFontOfSize:20];
         [self addSubview:self.lbProgress];
         
-        self.slider = [[UISlider alloc] initWithFrame:CGRectMake(0, self.height - 20, self.width, 20)];
+        self.slider = [[UISlider alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.lbProgress.frame) + 8, self.width, 20)];
         self.slider.minimumTrackTintColor = [UIColor colorWithRed:246/255.0 green:37/255.0 blue:0/255.0 alpha:1];
         self.slider.maximumTrackTintColor = [UIColor ms_colorWithHexString:@"#f8f8f8"];
         [self.slider setThumbImage:[UIImage imageNamed:@"circle"] forState:UIControlStateNormal];
@@ -72,6 +72,9 @@
     CGSize size = [self.lbProgress.text sizeWithAttributes:@{NSFontAttributeName : self.lbProgress.font}];
     self.lbProgress.width = size.width;
     self.lbProgress.centerX = 10;
+    
+    self.currentValue = minValue;
+    [self.slider setValue:minValue animated:YES];
 }
 
 - (void)setMaxValue:(float)maxValue {
@@ -116,12 +119,20 @@
 - (void)valueChanged:(UISlider *)slider {
     
     int value = floorf(slider.value);
-    int realValue = (value / self.interval) * self.interval;
-    if (realValue == 0 && value == 0) {
-        realValue = self.minValue;
-    } else if (realValue == 0 && value <= self.interval) {
-        realValue = self.interval;
+    int realValue = 0;
+
+    if (value == self.minValue || value == self.maxValue) {
+        realValue = value;
+    } else {
+        
+        if (self.minValue >= self.interval) {
+            realValue = (value / self.interval) * self.interval;
+        } else {
+            realValue = ((value + self.interval) / self.interval) * self.interval + self.minValue;
+            realValue = (realValue > self.maxValue) ? self.maxValue : realValue;
+        }
     }
+    
     NSLog(@"%d",value);
     self.lbProgress.text = [self convertMoneyFormate:realValue];
     CGSize size = [self.lbProgress.text sizeWithAttributes:@{NSFontAttributeName : self.lbProgress.font}];
