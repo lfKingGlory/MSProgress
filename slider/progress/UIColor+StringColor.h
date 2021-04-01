@@ -13,3 +13,5 @@
 + (UIColor *)ms_colorWithHexStringAndAlpha:(NSString *)hexString;
 + (UIColor *)ms_colorWithHexString:(NSString *)hexString withAlpha:(CGFloat)alpha;
 @end
+
+// test5
