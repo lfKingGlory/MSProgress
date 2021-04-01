@@ -12,3 +12,6 @@
 + (UIImage *)ms_createImageWithColor:(UIColor *)color withSize:(CGSize)imageSize;
 + (UIImage *)ms_scaleToSize:(UIImage *)img ratio:(float)ratio;
 @end
+
+// test4
+
